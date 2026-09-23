@@ -1,0 +1,147 @@
+/*
+  Fichier      : style.css
+  Date         : 23/09/2026
+  Auteur       : Lysandre Besset
+  Description  : Feuille de style pour basesCSS.html (TP2 CSS)
+*/
+
+
+* {
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.5em;
+}
+
+
+header {
+  background-color:#333333; 
+  color: white;
+  text-align: center;
+  font-size: 2em;
+  line-height: 1.2em;
+  margin: 10px;
+  padding: 10px;
+}
+
+
+footer {
+  background-color: #333333; 
+  color: white;
+  text-align: center;
+  margin: 5px;
+  padding: 10px;
+}
+
+
+section {
+  margin: 10px;
+}
+
+
+article {
+  margin: 10px;
+  padding: 10px;
+  border: 2px dotted gray;
+}
+
+
+p {
+  margin: 10px;
+}
+
+
+h1 {
+  text-align: center;
+  color: red;
+  font-size: 2em;
+  font-variant: small-caps;
+}
+
+
+h2 {
+  padding: 10px;
+  background-color: red;
+  border-left: 50px solid black;
+  text-transform: capitalize; 
+}
+
+
+#info {
+  width: 600px;
+  background-color: brown;
+  color: white;
+  border-radius: 15px; 
+  text-align: center;
+  font-size: 1.2em;
+  line-height: 2em;
+  padding: 10px;
+  margin: auto; 
+}
+
+
+.documentation {
+  background-color: green;
+  color: white;
+  padding: 10px;
+}
+
+.documentation a {
+  text-decoration: none;
+  background-color: darkgreen;
+  color: yellowgreen; 
+  padding: 5px;
+}
+
+.documentation a:hover {
+  background-color: lightgreen;
+  color: darkgreen;
+}
+
+
+.code {
+  font-family: "Courier New", Courier, monospace;
+  background-color: #f5f5f5; 
+  border: 1px solid #d3d3d3; 
+  border-radius: 5px;
+}
+
+pre {
+  margin: 10px;
+  padding: 10px;
+}
+
+
+table {
+  width: 100%;
+  margin: auto; /* centre le tableau si le conteneur est plus large que possible */
+}
+
+table tr {
+  line-height: 2em;
+}
+
+table th {
+  background-color: darkblue;
+  color: white;
+  height: 3em;
+}
+
+table td,
+table th { /* caractéristiques communes aux cellules et à la première ligne */
+  border: 1px solid black;
+  padding: 10px;
+  text-align: center;
+}
+
+table tr:nth-child(even) {
+  background-color: lightblue;
+}
+
+table tr:last-child {
+  color: blue;
+}
+
