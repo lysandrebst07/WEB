@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo List Alpine.js</title>
+
+ 
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+
+    .page {
+      min-height: 100vh;
+      padding: 20px;
+      background: white;
+      color: black;
+    }
+
+   
+    .dark {
+      background: #1e1e1e;
+      color: #f5f5f5;
+    }
+
+  
+    .dyslexie {
+      line-height: 1.8;
+      letter-spacing: 0.05em;
+      word-spacing: 0.12em;
+    }
+    .dyslexie p,
+    .dyslexie li {
+      max-width: 70ch;
+      font-size: 1.08rem;
+    }
+
+    .faite {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+  </style>
+</head>
+
+<body>
+
+  
+  <div x-data="todoApp()" :class="{ dark: darkMode, dyslexie: dyslexie }" class="page">
+
+    <h1>Ma Todo List</h1>
+
+    
+    <button @click="changerTheme()">Changer de thème</button>
+    <button @click="changerLecture()">Lecture facilitée</button>
+
+   
+    <p>
+      <input type="text" x-model="nouvelleTache" @keydown.enter="ajouter()" placeholder="Nouvelle tâche">
+      <button @click="ajouter()">Ajouter</button>
+    </p>
+
+    
+    <ul>
+      <template x-for="(tache, index) in taches" :key="index">
+        <li>
+          <input type="checkbox" x-model="tache.faite" @change="sauvegarder()">
+          <span :class="{ faite: tache.faite }" x-text="tache.texte"></span>
+          <button @click="supprimer(index)">Supprimer</button>
+        </li>
+      </template>
+    </ul>
+
+    
+    <p>Total : <span x-text="taches.length"></span></p>
+    <p>Terminées : <span x-text="nbFaites()"></span></p>
+    <p>Restantes : <span x-text="taches.length - nbFaites()"></span></p>
+
+  </div>
+
+  <script>
+    function todoApp() {
+      return {
+        darkMode: localStorage.getItem('theme') === 'dark',
+        dyslexie: localStorage.getItem('dyslexie') === 'true',
+
+       taches: JSON.parse(localStorage.getItem('taches')) || [],
+
+        nouvelleTache: '',
+
+        ajouter() {
+          if (this.nouvelleTache.trim() === '') {
+            return; // on n'ajoute pas une tâche vide
+          }
+          this.taches.push({ texte: this.nouvelleTache, faite: false });
+          this.nouvelleTache = '';
+          this.sauvegarder();
+        },
+
+        supprimer(index) {
+          this.taches.splice(index, 1);
+          this.sauvegarder();
+        },
+
+        sauvegarder() {
+          localStorage.setItem('taches', JSON.stringify(this.taches));
+        },
+
+        nbFaites() {
+          let compteur = 0;
+          for (let i = 0; i < this.taches.length; i++) {
+            if (this.taches[i].faite) {
+              compteur++;
+            }
+          }
+          return compteur;
+        },
+
+        changerTheme() {
+          this.darkMode = !this.darkMode;
+          localStorage.setItem('theme', this.darkMode ? 'dark' : 'light');
+        },
+
+        changerLecture() {
+          this.dyslexie = !this.dyslexie;
+          localStorage.setItem('dyslexie', this.dyslexie ? 'true' : 'false');
+        }
+      }
+    }
+
+    function setCookie(name, value, days) {
+      let secondes = days * 24 * 60 * 60;
+      document.cookie = name + "=" + value + "; max-age=" + secondes + "; path=/";
+    }
+
+    function getCookie(name) {
+      let cookies = document.cookie.split("; ");
+      for (let i = 0; i < cookies.length; i++) {
+        let morceaux = cookies[i].split("=");
+        if (morceaux[0] === name) {
+          return morceaux[1];
+        }
+      }
+      return null; 
+    }
+
+    function deleteCookie(name) {
+      document.cookie = name + "=; max-age=0; path=/";
+    }
+  </script>
+
+</body>
+</html>
